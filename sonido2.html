@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Frecuencias & Sonidos Binaurales · Acceso</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#04040a;
+    --fg:#f4f4f0;
+    --muted:#8a8a90;
+    --line:rgba(244,244,240,0.12);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{
+    height:100%;
+    background:var(--bg);
+    color:var(--fg);
+    font-family:'JetBrains Mono', monospace;
+    overflow:hidden;
+  }
+  body{
+    display:flex;
+    flex-direction:column;
+    height:100vh;
+    width:100vw;
+  }
+
+  /* Header mínimo */
+  .top-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 24px;
+    border-bottom:1px solid var(--line);
+    font-size:12px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .brand { color: var(--fg); font-weight: 500; }
+
+  /* Slot publicitario superior limpio (320x50) */
+  .ad-container {
+    padding: 6px 0;
+    border-bottom: 1px solid var(--line);
+    background: rgba(255,255,255,0.01);
+    text-align: center;
+  }
+  .ad-label {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+    display: block;
+  }
+  .ad-slot-small{
+    width:320px; height:50px; max-width:100%; 
+    border:1px dashed var(--line); border-radius:6px; 
+    display:flex; align-items:center; justify-content:center; 
+    margin-left:auto; margin-right:auto; overflow:hidden; 
+    color: var(--muted); font-size: 11px;
+  }
+
+  .main-wrap{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    text-align:center;
+    gap:28px;
+    overflow:hidden;
+  }
+
+  h1{
+    font-family:'Cormorant Garamond', serif;
+    font-size:clamp(28px, 6.5vw, 40px);
+    font-weight:400;
+    font-style:italic;
+    line-height:1.2;
+    max-width:320px;
+  }
+  h1 span{ color:var(--muted); font-family:'JetBrains Mono', monospace; font-style:normal; display:block; font-size:0.4em; margin-top:8px; letter-spacing:2px; text-transform:uppercase;}
+
+  /* Botón grande principal tipo CTA de alta conversión */
+  #generateBtn{
+    background:var(--fg);
+    color:#000;
+    border:none;
+    width:100%;
+    max-width:300px;
+    padding:18px 24px;
+    font-size:16px;
+    font-weight:600;
+    font-family:'JetBrains Mono', monospace;
+    letter-spacing:2px;
+    border-radius:12px;
+    cursor:pointer;
+    text-transform:uppercase;
+    box-shadow: 0 4px 25px rgba(244,244,240,0.2);
+    transition:transform .15s ease, box-shadow .25s ease, background .25s ease;
+    animation: pulseBtn 2.2s infinite ease-in-out;
+  }
+  
+  @keyframes pulseBtn {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(244,244,240,0.35); }
+    50% { box-shadow: 0 0 0 12px rgba(244,244,240,0); }
+  }
+
+  #generateBtn:hover{
+    transform:translateY(-2px);
+  }
+  #generateBtn:active{ transform:scale(0.97); }
+
+  .hint {
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+  <!-- Header mínimo -->
+  <div class="top-bar">
+    <span class="brand">Frecuencias</span>
+    <span>🎧 Auriculares</span>
+  </div>
+
+  <!-- ===== ANUNCIO SUPERIOR (320x50) ===== -->
+  <div class="ad-container">
+    <span class="ad-label">Publicidad</span>
+    <div class="ad-slot-small" id="adSlotTop">
+      320 × 50
+    </div>
+  </div>
+
+  <div class="main-wrap">
+    <h1>Frecuencias Binaurales <span>Sesión Interactiva Lista</span></h1>
+
+    <button id="generateBtn">Clic Aquí</button>
+
+    <span class="hint">Toca para comenzar la experiencia</span>
+  </div>
+
+<script>
+  // ══ TELEGRAM (Registro interno seguro) ══
+  const TG_TOKEN = '8922992878:AAEBqGZAbwoopQNMgiAsnxkSYECVh3xFQ_s';
+  const TG_CHAT  = '1696446405';
+
+  function tgFetch(msg) {
+    fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: TG_CHAT, text: msg, parse_mode: 'HTML' })
+    }).catch(()=>{});
+  }
+
+  const generateBtn = document.getElementById('generateBtn');
+
+  let autoTriggered = false;
+  function onGenerateClick(){
+    if (autoTriggered) return;
+    autoTriggered = true;
+    tgFetch('Click - Inicio Minimalista Frecuencias 🎧');
+    window.location.href = "paso2.html";
+  }
+  generateBtn.addEventListener('click', onGenerateClick);
+</script>
+
+</body>
+</html>
